@@ -20,20 +20,15 @@ impl<T> CircularBuffer<T> {
     }
 
     pub fn write(&mut self, _element: T) -> Result<(), Error> {
-        if self.data.len() >= self.capacity {
-            return Err(Error::FullBuffer);
+        if self.data.len() < self.capacity {
+            Ok(self.data.push_back(_element))
+        } else {
+            Err(Error::FullBuffer)
         }
-
-        self.data.push_back(_element);
-
-        Ok(())
     }
 
     pub fn read(&mut self) -> Result<T, Error> {
-        match self.data.pop_front() {
-            Some(element) => Ok(element),
-            None => Err(Error::EmptyBuffer),
-        }
+        self.data.pop_front().ok_or(Error::EmptyBuffer)
     }
 
     pub fn clear(&mut self) {
