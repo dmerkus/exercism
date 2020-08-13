@@ -31,12 +31,10 @@ impl<'a> HighScores<'a> {
     }
 
     pub fn personal_top_three(&self) -> Vec<u32> {
-        let mut scores = Vec::from(self.scores);
-        scores.sort_by(|a, b| b.cmp(a));
+        let mut scores = self.scores.to_vec();
 
-        if scores.len() > 3 {
-            scores.resize(3, 0);
-        }
+        scores.sort_unstable_by(|a, b| b.cmp(a));
+        scores.truncate(3);
 
         scores
     }
