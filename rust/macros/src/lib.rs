@@ -1,3 +1,4 @@
+// TODO: Want to preallocate HashMap size
 #[macro_export]
 macro_rules! hashmap {
   () => {
