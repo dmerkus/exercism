@@ -1,12 +1,10 @@
 module SpaceAge
 
-[<Measure>]
-type s
+open FSharp.Data.UnitSystems.SI.UnitSymbols
 
 [<Measure>]
-type yr
-
-let secondsPerEarthYear = 31557600.0<s/yr>
+type yr =
+    static member asSeconds = 31557600.0<s/yr>
 
 type Planet =
     | Mercury
@@ -18,7 +16,7 @@ type Planet =
     | Uranus
     | Neptune
 
-let age (planet: Planet) (seconds: float<s>): float<yr> =
+let age (planet: Planet) (seconds: int64<s>): float<yr> =
     let orbitalPeriod =
         match planet with
         | Mercury -> 0.2408467
@@ -30,4 +28,4 @@ let age (planet: Planet) (seconds: float<s>): float<yr> =
         | Uranus -> 84.016846
         | Neptune -> 164.79132
 
-    seconds / (orbitalPeriod * secondsPerEarthYear)
+    (LanguagePrimitives.FloatWithMeasure (float seconds)) / (orbitalPeriod * yr.asSeconds)
