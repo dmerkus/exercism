@@ -8,3 +8,5 @@ csharp/**/obj
 
 fsharp/**/bin
 fsharp/**/obj
+
+**/.exercism
